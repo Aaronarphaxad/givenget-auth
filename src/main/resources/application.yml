@@ -1,0 +1,19 @@
+server:
+  port: 9000
+
+spring:
+  security:
+    oauth2:
+      authorizationserver:
+        client:
+          givenget:
+            registration:
+              client-id: givenget
+              client-secret: "{noop}SuperSecret"
+              client-authentication-methods:
+                - client_secret_post
+              authorization-grant-types:
+                - client_credentials
+              scopes:
+                - givenget:read
+                - givenget:write

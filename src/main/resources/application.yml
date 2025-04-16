@@ -17,3 +17,22 @@ spring:
               scopes:
                 - givenget:read
                 - givenget:write
+                - givenget:delete
+          givenget-ui:
+            registration:
+              client-id: "givenget-ui"
+              client-secret: "{noop}SuperSuperSecret"
+              client-authentication-methods:
+                - client_secret_post
+              authorization-grant-types:
+                - "authorization_code"
+                - "refresh_token"
+              redirect-uris:
+              - "com.givenget.demo:/oauthredirect"
+              scopes:
+              - "openid"
+              - "profile"
+              - "givenget:read"
+              - "givenget:write"
+              - "givenget:delete"
+            require-authorization-consent: true

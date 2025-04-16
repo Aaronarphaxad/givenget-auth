@@ -3,6 +3,11 @@ server:
   port: 9000
 
 spring:
+  application:
+    name: givenget-auth
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/givenget
   security:
     oauth2:
       authorizationserver:

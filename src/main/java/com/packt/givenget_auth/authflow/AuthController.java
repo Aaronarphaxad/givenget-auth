@@ -25,11 +25,15 @@ public class AuthController {
 
     @PostMapping("/signup")
     public ResponseEntity<?> register(@RequestBody User user) {
+        System.out.println("Received user: " + user);
+
         if (userRepo.findByUsername(user.getUsername()).isPresent()) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Username already exists");
         }
+
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepo.save(user);
+
         return ResponseEntity.ok("User registered");
     }
 

@@ -5,10 +5,13 @@ import com.packt.givenget_auth.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.security.authentication.*;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+
 
 @RestController
 @RequestMapping("/api/auth")
@@ -20,7 +23,7 @@ public class AuthController {
     @Autowired private JwtUtil jwtUtil;
     @Autowired private UserDetailsServiceImpl userDetailsService;
 
-    @PostMapping("/register")
+    @PostMapping("/signup")
     public ResponseEntity<?> register(@RequestBody User user) {
         if (userRepo.findByUsername(user.getUsername()).isPresent()) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Username already exists");
@@ -44,4 +47,11 @@ public class AuthController {
         String token = jwtUtil.generateToken(userDetails.getUsername());
         return ResponseEntity.ok().body("Bearer " + token);
     }
+
+    @GetMapping("/profile")
+    public ResponseEntity<String> getProfile(@AuthenticationPrincipal UserDetails userDetails) {
+        return ResponseEntity.ok("Hello, " + userDetails.getUsername());
+    }
+
+
 }
